@@ -179,25 +179,15 @@ AVPlayer* player;
     NSLog(@"playing %i",currentSONG);
     VKAudio* song = [audios  objectAtIndex:currentSONG ];
     player =  [[AVPlayer alloc] initWithURL:[self urlForVKAudio:song]];
-    //[player prepareToPlay];
-    //player.volume=1;
-    //[player ]
-   // [self observeValueForKeyPath:@"status" ofObject:player change:nil context:nil];
-    //[player addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
     [player play];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAVPlayerItemDidPlayToEndTimeNotification) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
 }
-- (void)didChangeValueForKey:(NSString *)key
+- (void)handleAVPlayerItemDidPlayToEndTimeNotification
 {
-    if ( [key isEqualToString:@"status"] && [player valueForKey:@"status"] == AVPlayerStatusUnknown)
-    {
-        [self goToNextSong];
-    }
+    [self goToNextSong];
 }
--(void)willChangeValueForKey:(NSString *)key
-{
-    
-}
+
 //вовзращает ссылку на локальный файл, либо, если такого нет, ссылку на мп3
 -(NSURL*) urlForVKAudio:(VKAudio*)audio
 {
