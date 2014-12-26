@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ViewController : UIViewController
-
+#import <VKSdk/VKSdk.h>
+@interface ViewController : UIViewController<VKSdkDelegate,
+UITableViewDataSource,UITableViewDelegate>
 
 @end
 
