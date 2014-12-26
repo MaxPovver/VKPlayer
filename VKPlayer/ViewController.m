@@ -185,7 +185,9 @@ AVPlayer* player;
 }
 - (void)handleAVPlayerItemDidPlayToEndTimeNotification
 {
-    [self goToNextSong];
+    [self goToNextSong];//запустили новую песню
+    [self.MusicList selectRowAtIndexPath:[NSIndexPath indexPathForRow:currentSONG inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];//промотали играющую песню повыше
+
 }
 
 //вовзращает ссылку на локальный файл, либо, если такого нет, ссылку на мп3
