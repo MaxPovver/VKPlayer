@@ -106,6 +106,18 @@ AVPlayer* player;
  */
 -(void)shouldReloadMusic
 {
+    //TODO: кеширование списка музона довести до ума
+    //сначала подгрузим текущий закешированный список , если он есть
+   /* NSUserDefaults* d = [NSUserDefaults standardUserDefaults];
+    VKResponse* r = [[VKResponse alloc] init];//пытаемся вытащить файл из настроек
+    NSString* s=[d stringForKey:@"musicjson"];
+    if ( s!=nil)//если что-то там лежит
+    {
+        [r setResponseString:s];
+        [self updatedMusicList:r];//пытаемся его показать
+    }*/
+    //загрузим его в таблицу, теперь можно слушать кешированную музыку
+    //а теперь грузим список из интернета
     NSDictionary* params = @{
                              @"owner_id":[[self getToken] userId],
                              @"need_user":@"0",
@@ -117,10 +129,13 @@ AVPlayer* player;
     andParameters:params
     andHttpMethod:@"POST"];
     [request executeWithResultBlock: ^(VKResponse *response) {
+        /*[d  setObject:[response responseString] forKey:@"musicjson"];//закидываем новый список в настройки
+        [d synchronize];//сохраним настройки
+        if (response != r) //если ничего не поменялось, не будем раздражать пользователя обновлениями*/
         [self updatedMusicList:response];//NSLog(@"Result: %@", response);
     } errorBlock: ^(NSError *error) {
         if (error.code != VK_API_ERROR) {
-            [error.vkError.request repeat];
+            NSLog(@"Unknown error");//[error.vkError.request repeat];
         }
         else {
             NSLog(@"VK error: %@", error);
@@ -176,6 +191,11 @@ AVPlayer* player;
 //требует проиграт текущую песню
 -(void) playSong
 {
+    if (currentSONG>audios.count) {//если песен больше нет
+        currentSONG = 0;//вернемся на начало
+        [self.MusicList selectRowAtIndexPath:[NSIndexPath indexPathForRow:currentSONG inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];//и промотаем туда табличку
+        return;
+    }
     NSLog(@"playing %i",currentSONG);
     VKAudio* song = [audios  objectAtIndex:currentSONG ];
     player =  [[AVPlayer alloc] initWithURL:[self urlForVKAudio:song]];
@@ -219,5 +239,9 @@ AVPlayer* player;
     }
     
     return result;
+}
+-(void)cacheAll:(int)maxConnections
+{
+    
 }
 @end
