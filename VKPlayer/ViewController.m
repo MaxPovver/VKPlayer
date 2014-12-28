@@ -33,6 +33,18 @@ AVPlayer* player;
     {
         [self setToken:[VKSdk getAccessToken]];
     } else { [VKSdk authorize:SCOPE]; }
+    //попытаемся вытащить список музычки из настроек
+   /* dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
+                   ^{
+                       NSString* pathTo = [DOCUMENTS stringByAppendingPathComponent:@"audioList.cache"];
+                       NSMutableArray* arr = [[NSMutableArray alloc] initWithContentsOfFile:pathTo];
+                       if (arr!=nil && [arr count]>0)
+                       {
+                           VKAudios* n = [[VKAudios alloc] init];
+                           [n setItems:arr];
+                           [self updateList:n];
+                       }
+                   });*/
 }
 
 -(void)setToken:(VKAccessToken* )newToken
@@ -107,18 +119,6 @@ AVPlayer* player;
  */
 -(void)shouldReloadMusic
 {
-    //TODO: кеширование списка музона довести до ума
-    //сначала подгрузим текущий закешированный список , если он есть
-   /* NSUserDefaults* d = [NSUserDefaults standardUserDefaults];
-    VKResponse* r = [[VKResponse alloc] init];//пытаемся вытащить файл из настроек
-    NSString* s=[d stringForKey:@"musicjson"];
-    if ( s!=nil)//если что-то там лежит
-    {
-        [r setResponseString:s];
-        [self updatedMusicList:r];//пытаемся его показать
-    }*/
-    //загрузим его в таблицу, теперь можно слушать кешированную музыку
-    //а теперь грузим список из интернета
     NSDictionary* params = @{
                              @"owner_id":[[self getToken] userId],
                              @"need_user":@"0",
@@ -130,9 +130,6 @@ AVPlayer* player;
     andParameters:params
     andHttpMethod:@"POST"];
     [request executeWithResultBlock: ^(VKResponse *response) {
-        /*[d  setObject:[response responseString] forKey:@"musicjson"];//закидываем новый список в настройки
-        [d synchronize];//сохраним настройки
-        if (response != r) //если ничего не поменялось, не будем раздражать пользователя обновлениями*/
         [self updatedMusicList:response];//NSLog(@"Result: %@", response);
     } errorBlock: ^(NSError *error) {
         if (error.code != VK_API_ERROR) {
@@ -155,6 +152,15 @@ AVPlayer* player;
 -(void) updateList:(VKAudios*) n
 {
     audios=n;
+    //сохраним самый актуальный вариант записей в настройки
+   /* dispatch_async( dispatch_get_main_queue(),
+                   ^{
+                    NSString* pathTo = [DOCUMENTS stringByAppendingPathComponent:@"audioList.cache"];
+                       NSData* d = [[NSData  alloc] init];
+                       [[n items] ];
+                        if (![[[n items] copy] writeToFile:pathTo atomically:YES])
+                            NSLog(@"Failed to cache music list");
+                   });*/
     [self.MusicList reloadData];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
@@ -246,7 +252,8 @@ AVPlayer* player;
 }
 
 - (IBAction)cacheBtnPrsd:(id)sender {
-    [self cacheAll:5];
+   // [self cacheAll:5];
+    [self uncacheAll];
 }
 
 
@@ -278,5 +285,20 @@ AVPlayer* player;
                            });
         }
     }
+}
+//удаляет всё из кеша
+-(void)uncacheAll
+{
+    int total = 0;
+    NSString* pathTo = DOCUMENTS;
+    NSArray* files=[[NSFileManager defaultManager] contentsOfDirectoryAtPath:pathTo error:nil];
+    for (NSString* filename in files) {
+        NSString* file = [pathTo stringByAppendingPathComponent:filename];
+        if ( [file hasSuffix:@".mp3"])
+            if( [[NSFileManager defaultManager] removeItemAtPath:file error:nil] )
+             NSLog(@"Successfully removed %@(%i)",filename,total++);
+                else NSLog(@"Failed to remove %@",filename);
+    }
+    NSLog(@"Removed %i files from cache",total);
 }
 @end
