@@ -230,11 +230,11 @@ AVPlayer* player;
     {//если файл грузится первый раз
         //вернем юрл чтобы плеер сразу играть начал
         result = [NSURL URLWithString:audio.url];
-        //и начнем в фоне сохранять его в кеш
+        //и начнем в фоне сохранять его в кеш(да, в два раза больше траффика, но на мой взгляд это не критично)
 
         dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
         ^{
-            NSLog(@"Started saving file...");
+            NSLog(@"Started saving file %@ – %@ (%@.mp3)...",audio.artist,audio.title,audio.id);
             NSData* data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:audio.url]];
 
             if(![data writeToFile:pathTo atomically:YES])
@@ -253,7 +253,7 @@ AVPlayer* player;
 //кеширует все файлы из списка, грузит не более maxConnections песен в единицу времени, все это в фоне
 -(void)cacheAll:(int)maxConnections
 {
-    __block int currentConnections = 0;
+    __block int currentConnections = 0;//разделяемая между всеми потоками перменная счетчика работающих загрузок
     NSFileManager* fm = [NSFileManager defaultManager];
     for (int i=0; i<[audios count];i++)//перебираем все записи
     {
@@ -267,13 +267,14 @@ AVPlayer* player;
                                while (currentConnections>=maxConnections) { }//не начинаем загрузку пока подключений слишком много
                                currentConnections++;//добавим к счетчику это подключение
                                NSLog(@"Connection opened.");
+                               NSLog(@"Started saving file %@ – %@ (%@.mp3)...",a.artist,a.title,a.id);
                                NSData* data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:a.url]];//грузим из url'a аудизаписи данные
                                
                                if(![data writeToFile:pathTo atomically:YES])//сохраняя их в файл
                                    NSLog(@"Failed."); else NSLog(@"Ok.");
                                NSLog(@"Connection closed");
                                currentConnections--;//после готовности удалим соединение из счетчика
-                               data = nil;
+                               data = nil;//чтобы уменьшить кол-во сслок для сборщика мусора
                            });
         }
     }
