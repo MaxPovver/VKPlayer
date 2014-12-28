@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Yd-97-i1T">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Вся музыка-->
@@ -47,7 +48,7 @@
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NWg-5q-7Lt">
-                                <rect key="frame" x="241" y="28" width="118" height="30"/>
+                                <rect key="frame" x="101" y="28" width="118" height="30"/>
                                 <state key="normal" title="Кешировать всё">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -55,15 +56,26 @@
                                     <action selector="cacheBtnPrsd:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VAI-I4-yfx"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BJd-WB-tTB">
+                                <rect key="frame" x="244" y="28" width="59" height="30"/>
+                                <state key="normal" title="Удалить">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cDg-XM-nz3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="NWg-5q-7Lt" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="0No-kg-lpv"/>
-                            <constraint firstAttribute="bottom" secondItem="zvl-pK-2tw" secondAttribute="bottom" id="2zD-D0-42U"/>
-                            <constraint firstItem="NWg-5q-7Lt" firstAttribute="centerX" secondItem="zvl-pK-2tw" secondAttribute="centerX" id="K2q-Ba-irf"/>
-                            <constraint firstItem="zvl-pK-2tw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="LsE-TI-7JM"/>
-                            <constraint firstAttribute="trailing" secondItem="zvl-pK-2tw" secondAttribute="trailing" id="OpS-3N-4uP"/>
-                            <constraint firstItem="zvl-pK-2tw" firstAttribute="top" secondItem="NWg-5q-7Lt" secondAttribute="bottom" constant="12" id="xhf-zp-jeJ"/>
+                            <constraint firstAttribute="bottom" secondItem="zvl-pK-2tw" secondAttribute="bottom" id="0lx-zh-j7C"/>
+                            <constraint firstItem="NWg-5q-7Lt" firstAttribute="baseline" secondItem="BJd-WB-tTB" secondAttribute="baseline" id="4zk-HC-Gmt"/>
+                            <constraint firstItem="BJd-WB-tTB" firstAttribute="leading" secondItem="NWg-5q-7Lt" secondAttribute="trailing" constant="25" id="HhY-vn-tb3"/>
+                            <constraint firstItem="NWg-5q-7Lt" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="85" id="Hz9-Vz-v6y"/>
+                            <constraint firstItem="zvl-pK-2tw" firstAttribute="top" secondItem="NWg-5q-7Lt" secondAttribute="bottom" constant="12" id="Pp7-aN-Lnk"/>
+                            <constraint firstItem="NWg-5q-7Lt" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="WOt-5T-bAG"/>
+                            <constraint firstAttribute="trailing" secondItem="zvl-pK-2tw" secondAttribute="trailing" id="dQ6-jC-6WT"/>
+                            <constraint firstItem="zvl-pK-2tw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ji8-U4-NSb"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Вся музыка" image="ic_vk_logo_nb.png" id="qjD-RX-dT1"/>

@@ -252,8 +252,7 @@ AVPlayer* player;
 }
 
 - (IBAction)cacheBtnPrsd:(id)sender {
-   // [self cacheAll:5];
-    [self uncacheAll];
+    [self cacheAll:5];
 }
 
 
@@ -280,12 +279,18 @@ AVPlayer* player;
                                if(![data writeToFile:pathTo atomically:YES])//сохраняя их в файл
                                    NSLog(@"Failed."); else NSLog(@"Ok.");
                                NSLog(@"Connection closed");
+                               
                                currentConnections--;//после готовности удалим соединение из счетчика
                                data = nil;//чтобы уменьшить кол-во сслок для сборщика мусора
                            });
         }
     }
 }
+
+- (IBAction)deleteBtnPressed:(id)sender {
+    [self uncacheAll];
+}
+
 //удаляет всё из кеша
 -(void)uncacheAll
 {
