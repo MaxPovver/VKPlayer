@@ -17,6 +17,7 @@
 
 @implementation ViewController
     VKAccessToken* token;
+bool  lastRequestFromCode = false;
     NSArray  * SCOPE = nil;
 VKAudios* audios = nil;
 AVPlayer* player;
@@ -177,7 +178,9 @@ AVPlayer* player;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (currentSONG!=indexPath.item) {
+    if (lastRequestFromCode)
+    { lastRequestFromCode = false; return;}
+    if (currentSONG!=indexPath.item ) {
         currentSONG = indexPath.item;
         [self playSong];
     }
@@ -206,6 +209,7 @@ AVPlayer* player;
 - (void)handleAVPlayerItemDidPlayToEndTimeNotification
 {
     [self goToNextSong];//запустили новую песню
+    lastRequestFromCode = true;//перед отправлением ообщения о выборе следующей песни отметим, что этот запрос был не от от реального пользователя, чтобы оно не запускало песню еще раз
     [self.MusicList selectRowAtIndexPath:[NSIndexPath indexPathForRow:currentSONG inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];//промотали играющую песню повыше
 
 }
@@ -240,8 +244,38 @@ AVPlayer* player;
     
     return result;
 }
+
+- (IBAction)cacheBtnPrsd:(id)sender {
+    [self cacheAll:5];
+}
+
+
+//кеширует все файлы из списка, грузит не более maxConnections песен в единицу времени, все это в фоне
 -(void)cacheAll:(int)maxConnections
 {
-    
+    __block int currentConnections = 0;
+    NSFileManager* fm = [NSFileManager defaultManager];
+    for (int i=0; i<[audios count];i++)//перебираем все записи
+    {
+        VKAudio* a = [audios objectAtIndex:i];
+        NSString* pathTo = [DOCUMENTS stringByAppendingPathComponent:
+                            [NSString stringWithFormat:@"%@.mp3",a.id]];
+        if (![fm fileExistsAtPath:pathTo])//если для очередной записи еще нет сохранения в кеше
+        {
+            dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),//начнем для нее в фоне загрузку
+                           ^{
+                               while (currentConnections>=maxConnections) { }//не начинаем загрузку пока подключений слишком много
+                               currentConnections++;//добавим к счетчику это подключение
+                               NSLog(@"Connection opened.");
+                               NSData* data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:a.url]];//грузим из url'a аудизаписи данные
+                               
+                               if(![data writeToFile:pathTo atomically:YES])//сохраняя их в файл
+                                   NSLog(@"Failed."); else NSLog(@"Ok.");
+                               NSLog(@"Connection closed");
+                               currentConnections--;//после готовности удалим соединение из счетчика
+                               data = nil;
+                           });
+        }
+    }
 }
 @end

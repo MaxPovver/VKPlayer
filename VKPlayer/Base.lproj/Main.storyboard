@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="zvl-pK-2tw">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="zvl-pK-2tw">
                                 <rect key="frame" x="0.0" y="70" width="600" height="530"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -46,13 +46,24 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="M84-7E-qb3"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NWg-5q-7Lt">
+                                <rect key="frame" x="241" y="28" width="118" height="30"/>
+                                <state key="normal" title="Кешировать всё">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cacheBtnPrsd:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VAI-I4-yfx"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="zvl-pK-2tw" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="28n-0O-r9g"/>
-                            <constraint firstItem="zvl-pK-2tw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="95Z-cJ-1w3"/>
-                            <constraint firstItem="zvl-pK-2tw" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="70" id="xeP-ya-Tee"/>
-                            <constraint firstAttribute="trailing" secondItem="zvl-pK-2tw" secondAttribute="trailing" id="zyu-Xf-nPy"/>
+                            <constraint firstItem="NWg-5q-7Lt" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="0No-kg-lpv"/>
+                            <constraint firstAttribute="bottom" secondItem="zvl-pK-2tw" secondAttribute="bottom" id="2zD-D0-42U"/>
+                            <constraint firstItem="NWg-5q-7Lt" firstAttribute="centerX" secondItem="zvl-pK-2tw" secondAttribute="centerX" id="K2q-Ba-irf"/>
+                            <constraint firstItem="zvl-pK-2tw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="LsE-TI-7JM"/>
+                            <constraint firstAttribute="trailing" secondItem="zvl-pK-2tw" secondAttribute="trailing" id="OpS-3N-4uP"/>
+                            <constraint firstItem="zvl-pK-2tw" firstAttribute="top" secondItem="NWg-5q-7Lt" secondAttribute="bottom" constant="12" id="xhf-zp-jeJ"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Вся музыка" image="ic_vk_logo_nb.png" id="qjD-RX-dT1"/>
