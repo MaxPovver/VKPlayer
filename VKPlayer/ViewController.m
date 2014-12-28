@@ -270,6 +270,7 @@ AVPlayer* player;
         {
             dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),//начнем для нее в фоне загрузку
                            ^{
+                               @autoreleasepool {
                                while (currentConnections>=maxConnections) { }//не начинаем загрузку пока подключений слишком много
                                currentConnections++;//добавим к счетчику это подключение
                                NSLog(@"Connection opened.");
@@ -279,9 +280,9 @@ AVPlayer* player;
                                if(![data writeToFile:pathTo atomically:YES])//сохраняя их в файл
                                    NSLog(@"Failed."); else NSLog(@"Ok.");
                                NSLog(@"Connection closed");
-                               
+                                   data = nil;
                                currentConnections--;//после готовности удалим соединение из счетчика
-                               data = nil;//чтобы уменьшить кол-во сслок для сборщика мусора
+                               }
                            });
         }
     }
