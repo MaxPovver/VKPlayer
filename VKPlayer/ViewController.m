@@ -45,6 +45,7 @@ AVPlayer* player;
                            [self updateList:n];
                        }
                    });*/
+
 }
 
 -(void)setToken:(VKAccessToken* )newToken
@@ -197,7 +198,7 @@ AVPlayer* player;
     currentSONG++;
     [self playSong];
 }
-//требует проиграт текущую песню
+//сообщение, которое получает плеер при смене песни
 -(void) playSong
 {
     if (currentSONG>audios.count) {//если песен больше нет
@@ -207,10 +208,22 @@ AVPlayer* player;
     }
     NSLog(@"playing %i",currentSONG);
     VKAudio* song = [audios  objectAtIndex:currentSONG ];
-    player =  [[AVPlayer alloc] initWithURL:[self urlForVKAudio:song]];
-    [player play];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAVPlayerItemDidPlayToEndTimeNotification) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+     if ( player == nil )//при первом вызове создаем объект плеера
+     {
+         player = [[AVPlayer alloc] initWithURL:[self urlForVKAudio:song]];
+         [player play];
+         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAVPlayerItemDidPlayToEndTimeNotification) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+     }
+    else
+    {
+        [player replaceCurrentItemWithPlayerItem:
+        [[AVPlayerItem alloc] initWithURL:[self urlForVKAudio:song]]];
+        [player play];
+    }
+
+    
+     
 }
 - (void)handleAVPlayerItemDidPlayToEndTimeNotification
 {
