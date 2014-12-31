@@ -207,18 +207,22 @@ AVPlayer* player;
         return;
     }
     NSLog(@"playing %i",currentSONG);
-    VKAudio* song = [audios  objectAtIndex:currentSONG ];
+    VKAudio* song = [audios  objectAtIndex:currentSONG];
      if ( player == nil )//при первом вызове создаем объект плеера
      {
          player = [[AVPlayer alloc] initWithURL:[self urlForVKAudio:song]];
          [player play];
-         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
-         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAVPlayerItemDidPlayToEndTimeNotification) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+         [[AVAudioSession sharedInstance]
+            setCategory:AVAudioSessionCategoryPlayback error:nil];//включаем игру в фоне
+         [[AVAudioSession sharedInstance] setActive:YES error:nil];
+         [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+         [self becomeFirstResponder];
+         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAVPlayerItemDidPlayToEndTimeNotification) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];//включаем срабатывание наблюдателя на завершение проигрывания
      }
     else
     {
         [player replaceCurrentItemWithPlayerItem:
-        [[AVPlayerItem alloc] initWithURL:[self urlForVKAudio:song]]];
+            [[AVPlayerItem alloc] initWithURL:[self urlForVKAudio:song]]];
         [player play];
     }
 
