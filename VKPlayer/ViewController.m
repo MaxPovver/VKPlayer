@@ -18,6 +18,7 @@
 @implementation ViewController
     VKAccessToken* token;
 bool  lastRequestFromCode = false;
+bool paused = false;
     NSArray  * SCOPE = nil;
 VKAudios* audios = nil;
 AVPlayer* player;
@@ -198,6 +199,12 @@ AVPlayer* player;
     currentSONG++;
     [self playSong];
 }
+-(void) goToPreviousSong
+{
+    currentSONG--;
+    if(currentSONG <0) currentSONG = 0;
+    [self playSong];
+}
 //сообщение, которое получает плеер при смене песни
 -(void) playSong
 {
@@ -229,6 +236,36 @@ AVPlayer* player;
     
      
 }
+-(BOOL)canBecomeFirstResponder {return YES;}
+
+- (void)remoteControlReceivedWithEvent:(UIEvent *)receivedEvent {
+    
+    if (receivedEvent.type == UIEventTypeRemoteControl) {
+        
+        switch (receivedEvent.subtype) {
+                
+            case UIEventSubtypeRemoteControlPlay:
+                [player play];
+                break;
+                
+            case UIEventSubtypeRemoteControlPause:
+                [player pause];
+                break;
+                
+            case UIEventSubtypeRemoteControlPreviousTrack:
+                [self goToPreviousSong];
+                break;
+                
+            case UIEventSubtypeRemoteControlNextTrack:
+                [self goToNextSong];
+                break;
+                
+            default:
+                break;
+        }
+    }
+}
+
 - (void)handleAVPlayerItemDidPlayToEndTimeNotification
 {
     [self goToNextSong];//запустили новую песню
