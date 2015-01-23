@@ -33,7 +33,9 @@ AVPlayer* player;
     if ([VKSdk wakeUpSession])
     {
         [self setToken:[VKSdk getAccessToken]];
-    } else { [VKSdk authorize:SCOPE]; }
+    } else {
+        [VKSdk authorize:SCOPE];
+    }
     //попытаемся вытащить список музычки из настроек
    /* dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
                    ^{
@@ -142,6 +144,7 @@ AVPlayer* player;
         }
     }];
 }
+
 -(void)updatedMusicList:(VKResponse*)newList
 {
     VKAudios* l =
@@ -259,7 +262,6 @@ AVPlayer* player;
             case UIEventSubtypeRemoteControlNextTrack:
                 [self goToNextSong];
                 break;
-                
             default:
                 break;
         }
@@ -306,7 +308,7 @@ AVPlayer* player;
 }
 
 - (IBAction)cacheBtnPrsd:(id)sender {
-    [self cacheAll:5];
+    [self cacheAll:10];
 }
 
 

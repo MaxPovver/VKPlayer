@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		841685BB1A728DE300D4E628 /* VKSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 841685BA1A728DE300D4E628 /* VKSdk.framework */; };
+		841685BD1A728E2000D4E628 /* VKSdkResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 841685BC1A728E2000D4E628 /* VKSdkResources.bundle */; };
 		846FD1A41A4C1D50006F2054 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 846FD1A31A4C1D50006F2054 /* main.m */; };
 		846FD1A71A4C1D50006F2054 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 846FD1A61A4C1D50006F2054 /* AppDelegate.m */; };
 		846FD1AA1A4C1D50006F2054 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846FD1A91A4C1D50006F2054 /* ViewController.m */; };
@@ -14,8 +16,6 @@
 		846FD1AF1A4C1D50006F2054 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 846FD1AE1A4C1D50006F2054 /* Images.xcassets */; };
 		846FD1B21A4C1D50006F2054 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846FD1B01A4C1D50006F2054 /* LaunchScreen.xib */; };
 		846FD1BE1A4C1D50006F2054 /* VKPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 846FD1BD1A4C1D50006F2054 /* VKPlayerTests.m */; };
-		84F1CA0B1A4C29FF009386BF /* VKSdkResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 84F1CA0A1A4C29FF009386BF /* VKSdkResources.bundle */; };
-		84F1CA0D1A4C2A16009386BF /* VKSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F1CA0C1A4C2A16009386BF /* VKSdk.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +29,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		841685BA1A728DE300D4E628 /* VKSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VKSdk.framework; path = "vk-ios-sdk/VKSdk.framework"; sourceTree = "<group>"; };
+		841685BC1A728E2000D4E628 /* VKSdkResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = VKSdkResources.bundle; path = "vk-ios-sdk/VKSdkResources.bundle"; sourceTree = "<group>"; };
 		846FD19E1A4C1D50006F2054 /* VKPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VKPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		846FD1A21A4C1D50006F2054 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		846FD1A31A4C1D50006F2054 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -42,8 +44,6 @@
 		846FD1B71A4C1D50006F2054 /* VKPlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VKPlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		846FD1BC1A4C1D50006F2054 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		846FD1BD1A4C1D50006F2054 /* VKPlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VKPlayerTests.m; sourceTree = "<group>"; };
-		84F1CA0A1A4C29FF009386BF /* VKSdkResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = VKSdkResources.bundle; path = "../vk-ios-sdk/VKSdkResources.bundle"; sourceTree = "<group>"; };
-		84F1CA0C1A4C2A16009386BF /* VKSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VKSdk.framework; path = "../vk-ios-sdk/VKSdk.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84F1CA0D1A4C2A16009386BF /* VKSdk.framework in Frameworks */,
+				841685BB1A728DE300D4E628 /* VKSdk.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,8 +75,8 @@
 		846FD1951A4C1D50006F2054 = {
 			isa = PBXGroup;
 			children = (
-				84F1CA0C1A4C2A16009386BF /* VKSdk.framework */,
-				84F1CA0A1A4C29FF009386BF /* VKSdkResources.bundle */,
+				841685BC1A728E2000D4E628 /* VKSdkResources.bundle */,
+				841685BA1A728DE300D4E628 /* VKSdk.framework */,
 				846FD1A01A4C1D50006F2054 /* VKPlayer */,
 				846FD1BA1A4C1D50006F2054 /* VKPlayerTests */,
 				846FD19F1A4C1D50006F2054 /* Products */,
@@ -221,7 +221,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84F1CA0B1A4C29FF009386BF /* VKSdkResources.bundle in Resources */,
+				841685BD1A728E2000D4E628 /* VKSdkResources.bundle in Resources */,
 				846FD1AD1A4C1D50006F2054 /* Main.storyboard in Resources */,
 				846FD1B21A4C1D50006F2054 /* LaunchScreen.xib in Resources */,
 				846FD1AF1A4C1D50006F2054 /* Images.xcassets in Resources */,
@@ -372,6 +372,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/admin/Documents/vk-ios-sdk",
+					"$(PROJECT_DIR)/vk-ios-sdk",
 				);
 				INFOPLIST_FILE = VKPlayer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -387,6 +388,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/admin/Documents/vk-ios-sdk",
+					"$(PROJECT_DIR)/vk-ios-sdk",
 				);
 				INFOPLIST_FILE = VKPlayer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
