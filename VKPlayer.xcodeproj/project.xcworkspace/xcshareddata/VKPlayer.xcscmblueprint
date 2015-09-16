@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "63249B98215D0E49C262CF9584B08217BF1723FE",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "63249B98215D0E49C262CF9584B08217BF1723FE" : 0,
+    "C8F50BCDCFDC63763FD6355FD91D619C6B03C252" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "89E3C096-4805-4592-8050-DB8EF92F2817",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "63249B98215D0E49C262CF9584B08217BF1723FE" : "VKPlayer",
+    "C8F50BCDCFDC63763FD6355FD91D619C6B03C252" : "vk-ios-sdk"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "VKPlayer",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 203,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "VKPlayer.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/MaxPovver\/VKPlayer.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "63249B98215D0E49C262CF9584B08217BF1723FE"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/VKCOM\/vk-ios-sdk.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C8F50BCDCFDC63763FD6355FD91D619C6B03C252"
+    }
+  ]
+}

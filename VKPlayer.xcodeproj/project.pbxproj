@@ -16,6 +16,7 @@
 		846FD1AF1A4C1D50006F2054 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 846FD1AE1A4C1D50006F2054 /* Images.xcassets */; };
 		846FD1B21A4C1D50006F2054 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846FD1B01A4C1D50006F2054 /* LaunchScreen.xib */; };
 		846FD1BE1A4C1D50006F2054 /* VKPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 846FD1BD1A4C1D50006F2054 /* VKPlayerTests.m */; };
+		8489B16C1AB45EC400EEF43F /* Audio.m in Sources */ = {isa = PBXBuildFile; fileRef = 8489B16B1AB45EC400EEF43F /* Audio.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,8 @@
 		846FD1B71A4C1D50006F2054 /* VKPlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VKPlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		846FD1BC1A4C1D50006F2054 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		846FD1BD1A4C1D50006F2054 /* VKPlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VKPlayerTests.m; sourceTree = "<group>"; };
+		8489B16B1AB45EC400EEF43F /* Audio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Audio.m; sourceTree = "<group>"; };
+		8489B16D1AB45EE100EEF43F /* Audio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Audio.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +103,8 @@
 				846FD1A61A4C1D50006F2054 /* AppDelegate.m */,
 				846FD1A81A4C1D50006F2054 /* ViewController.h */,
 				846FD1A91A4C1D50006F2054 /* ViewController.m */,
+				8489B16B1AB45EC400EEF43F /* Audio.m */,
+				8489B16D1AB45EE100EEF43F /* Audio.h */,
 				846FD1AB1A4C1D50006F2054 /* Main.storyboard */,
 				846FD1AE1A4C1D50006F2054 /* Images.xcassets */,
 				846FD1B01A4C1D50006F2054 /* LaunchScreen.xib */,
@@ -178,7 +183,7 @@
 		846FD1961A4C1D50006F2054 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Максим Чистов";
 				TargetAttributes = {
 					846FD19D1A4C1D50006F2054 = {
@@ -187,6 +192,9 @@
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 0;
 							};
 						};
 					};
@@ -242,6 +250,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8489B16C1AB45EC400EEF43F /* Audio.m in Sources */,
 				846FD1AA1A4C1D50006F2054 /* ViewController.m in Sources */,
 				846FD1A71A4C1D50006F2054 /* AppDelegate.m in Sources */,
 				846FD1A41A4C1D50006F2054 /* main.m in Sources */,
@@ -306,6 +315,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -375,8 +385,11 @@
 					"$(PROJECT_DIR)/vk-ios-sdk",
 				);
 				INFOPLIST_FILE = VKPlayer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "MaxPovver.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -391,8 +404,11 @@
 					"$(PROJECT_DIR)/vk-ios-sdk",
 				);
 				INFOPLIST_FILE = VKPlayer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "MaxPovver.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -410,6 +426,7 @@
 				);
 				INFOPLIST_FILE = VKPlayerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "MaxPovver.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VKPlayer.app/VKPlayer";
 			};
@@ -425,6 +442,7 @@
 				);
 				INFOPLIST_FILE = VKPlayerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "MaxPovver.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VKPlayer.app/VKPlayer";
 			};

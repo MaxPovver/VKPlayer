@@ -30,14 +30,14 @@ AVPlayer* player;
     SCOPE = @[ VK_PER_WALL, VK_PER_AUDIO];
     [VKSdk initializeWithDelegate:self andAppId:@"4697857"];
     [[VKSdk instance] setDelegate:self];
-    if ([VKSdk wakeUpSession])
+    if ([VKSdk wakeUpSession] && ![[VKSdk getAccessToken] isExpired])
     {
         [self setToken:[VKSdk getAccessToken]];
     } else {
         [VKSdk authorize:SCOPE];
     }
     //попытаемся вытащить список музычки из настроек
-   /* dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
+    dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
                    ^{
                        NSString* pathTo = [DOCUMENTS stringByAppendingPathComponent:@"audioList.cache"];
                        NSMutableArray* arr = [[NSMutableArray alloc] initWithContentsOfFile:pathTo];
@@ -47,7 +47,7 @@ AVPlayer* player;
                            [n setItems:arr];
                            [self updateList:n];
                        }
-                   });*/
+                   });
 
 }
 
@@ -158,14 +158,17 @@ AVPlayer* player;
 {
     audios=n;
     //сохраним самый актуальный вариант записей в настройки
-   /* dispatch_async( dispatch_get_main_queue(),
+   dispatch_async( dispatch_get_main_queue(),
                    ^{
                     NSString* pathTo = [DOCUMENTS stringByAppendingPathComponent:@"audioList.cache"];
                        NSData* d = [[NSData  alloc] init];
-                       [[n items] ];
-                        if (![[[n items] copy] writeToFile:pathTo atomically:YES])
+                       //[[n items] ];
+                       if (![[NSFileManager defaultManager] fileExistsAtPath:pathTo])
+                           [[NSFileManager defaultManager] createFileAtPath:pathTo contents:[NSData dataWithBytes:nil length:0] attributes:nil];
+                       NSMutableArray* ar = [n items];
+                        if (![ar writeToFile:pathTo atomically:YES])
                             NSLog(@"Failed to cache music list");
-                   });*/
+                   });
     [self.MusicList reloadData];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
@@ -216,7 +219,7 @@ AVPlayer* player;
         [self.MusicList selectRowAtIndexPath:[NSIndexPath indexPathForRow:currentSONG inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];//и промотаем туда табличку
         return;
     }
-    NSLog(@"playing %i",currentSONG);
+    NSLog(@"playing %li",currentSONG);
     VKAudio* song = [audios  objectAtIndex:currentSONG];
      if ( player == nil )//при первом вызове создаем объект плеера
      {
@@ -317,7 +320,7 @@ AVPlayer* player;
 {
     __block int currentConnections = 0;//разделяемая между всеми потоками перменная счетчика работающих загрузок
     NSFileManager* fm = [NSFileManager defaultManager];
-    for (int i=0; i<[audios count];i++)//перебираем все записи
+    for (int i=0; i<[[audios items] count];i++)//перебираем все записи
     {
         VKAudio* a = [audios objectAtIndex:i];
         NSString* pathTo = [DOCUMENTS stringByAppendingPathComponent:
@@ -345,6 +348,11 @@ AVPlayer* player;
 }
 
 - (IBAction)deleteBtnPressed:(id)sender {
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Удалить весь кеш" message:@"Вы точно хоите удалить все сохраненные аудиозаписи?" delegate:self cancelButtonTitle:@"Отмена" otherButtonTitles:@"Удалить", nil];
+    [alert show];
+}
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+   if(buttonIndex != 0)
     [self uncacheAll];
 }
 
@@ -357,9 +365,11 @@ AVPlayer* player;
     for (NSString* filename in files) {
         NSString* file = [pathTo stringByAppendingPathComponent:filename];
         if ( [file hasSuffix:@".mp3"])
+        {
             if( [[NSFileManager defaultManager] removeItemAtPath:file error:nil] )
              NSLog(@"Successfully removed %@(%i)",filename,total++);
                 else NSLog(@"Failed to remove %@",filename);
+        }
     }
     NSLog(@"Removed %i files from cache",total);
 }
