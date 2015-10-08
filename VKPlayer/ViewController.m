@@ -359,7 +359,7 @@
                             [NSString stringWithFormat: @"%@.mp3", a.id]];
         if (![fm fileExistsAtPath: pathTo])//если для очередной записи еще нет сохранения в кеше
         {
-            dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),//начнем для нее в фоне загрузку
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),//начнем для нее в фоне загрузку
                            ^{
                                @autoreleasepool {
                                    while (currentConnections >= maxConnections)
